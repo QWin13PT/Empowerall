@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>EMPOWERALL — Option A: merging Living Labs and long-term observation</title>
+    <style>
+      :root {
+        --forest: #0e582d;
+        --forest-deep: #062816;
+        --sand: #f7f1e3;
+        --sand-200: #e4d4b0;
+        --coral: #ed735d;
+        --ink: #1c2418;
+        --muted: #0a4624;
+        --white: #ffffff;
+        --radius-outer: 1.5rem;
+        --radius-inner: 0.75rem;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        color: var(--ink);
+        background: var(--white);
+        font-family: Inter, "Segoe UI", sans-serif;
+        line-height: 1.6;
+      }
+
+      header,
+      main {
+        width: min(72rem, calc(100% - 2.5rem));
+        margin-inline: auto;
+      }
+
+      header {
+        padding-block: 2.5rem 1.5rem;
+        border-bottom: 1px solid var(--sand-200);
+      }
+
+      .kicker {
+        margin: 0 0 0.75rem;
+        color: var(--muted);
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        max-width: 20ch;
+        margin: 0 0 0.75rem;
+        font-family: Sora, Inter, sans-serif;
+        font-size: clamp(1.75rem, 1rem + 2.4vw, 3rem);
+        line-height: 1.12;
+        letter-spacing: -0.03em;
+        text-wrap: balance;
+      }
+
+      .lede,
+      .draft,
+      .note,
+      .legend p,
+      figcaption {
+        max-width: 62ch;
+        text-wrap: pretty;
+      }
+
+      .lede {
+        margin: 0;
+        color: var(--muted);
+      }
+
+      .draft {
+        margin: 2rem 0 0;
+        font-size: 1.125rem;
+      }
+
+      .grid {
+        display: grid;
+        gap: 1.25rem;
+        margin: 2.5rem 0 3rem;
+      }
+
+      @media (min-width: 48rem) {
+        .grid {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+
+      .platform {
+        padding: 0.75rem;
+        border-radius: var(--radius-outer);
+        background: var(--sand);
+        box-shadow: 0 1px 2px rgb(28 36 24 / 0.06);
+      }
+
+      .platform-label,
+      .lab-label {
+        margin: 0;
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .platform-label {
+        color: var(--muted);
+      }
+
+      .platform h2 {
+        margin: 0.35rem 0 0.75rem;
+        font-family: Sora, Inter, sans-serif;
+        font-size: 1.125rem;
+        line-height: 1.35;
+        text-wrap: balance;
+      }
+
+      .lab {
+        padding: 0.75rem 1rem;
+        border-radius: var(--radius-inner);
+        background: var(--white);
+        outline: 1px solid rgb(0 0 0 / 0.1);
+        outline-offset: -1px;
+      }
+
+      .lab-label {
+        color: var(--coral);
+      }
+
+      .lab h3 {
+        margin: 0.25rem 0 0;
+        font-size: 1rem;
+      }
+
+      .relation {
+        margin: 0.75rem 0 0;
+        color: var(--muted);
+        font-size: 0.875rem;
+        font-style: italic;
+      }
+
+      .legend {
+        display: grid;
+        gap: 1.5rem;
+        padding: 1.5rem 0 3rem;
+        border-top: 1px solid var(--sand-200);
+      }
+
+      @media (min-width: 48rem) {
+        .legend {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+
+      .swatch {
+        display: flex;
+        gap: 0.75rem;
+        align-items: center;
+        margin: 0 0 0.5rem;
+      }
+
+      .swatch i {
+        display: block;
+        width: 2.75rem;
+        height: 2.75rem;
+        border-radius: 0.75rem;
+      }
+
+      .swatch.platform i {
+        background: var(--sand);
+      }
+
+      .swatch.lab i {
+        background: var(--white);
+        outline: 1px solid rgb(0 0 0 / 0.1);
+        outline-offset: -1px;
+      }
+
+      .note {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.875rem;
+      }
+
+      footer {
+        padding: 1.5rem 0 3rem;
+        color: var(--muted);
+        font-size: 0.875rem;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <p class="kicker">KoM exploration · Seville · 27–29 October 2026</p>
+      <h1>Four places with a long memory.</h1>
+      <p class="lede">
+        Option A: merge sections 04 (Living Labs) and 05 (Long-term observation)
+        into one section. This page is a discussion sketch. It is not on the
+        live site.
+      </p>
+      <p class="draft">
+        EMPOWERALL develops four Agroecology Living Labs in Spain, France,
+        Romania and Slovakia. Each is embedded in a Long-Term Socio-Ecological
+        Research (LTSER) Platform of eLTER RI, the European research
+        infrastructure that has observed these landscapes and their communities
+        for years. The Living Labs bring new generation farmers and local actors
+        together to co-create agroecological change; the Platforms provide the
+        data, monitoring and research networks to follow it over time and share
+        it across Europe.
+      </p>
+    </header>
+    <main>
+      <p class="kicker">Paired entries</p>
+      <div class="grid">
+        <article class="platform">
+          <p class="platform-label">LTSER Platform · observed over time</p>
+          <h2>Doñana</h2>
+          <div class="lab">
+            <p class="lab-label">Agroecology Living Lab · change is co-created</p>
+            <h3>Spain</h3>
+          </div>
+          <p class="relation">Relationship in one line: to be written by CSIC.</p>
+        </article>
+        <article class="platform">
+          <p class="platform-label">LTSER Platform · observed over time</p>
+          <h2>Zone Atelier Plaine et Val de Sèvre</h2>
+          <div class="lab">
+            <p class="lab-label">Agroecology Living Lab · change is co-created</p>
+            <h3>France</h3>
+          </div>
+          <p class="relation">Relationship in one line: to be written by CEBC.</p>
+        </article>
+        <article class="platform">
+          <p class="platform-label">LTSER Platform · observed over time</p>
+          <h2>Brăila Islands</h2>
+          <div class="lab">
+            <p class="lab-label">Agroecology Living Lab · change is co-created</p>
+            <h3>Romania</h3>
+          </div>
+          <p class="relation">Relationship in one line: to be written by UB and SCDA.</p>
+        </article>
+        <article class="platform">
+          <p class="platform-label">LTSER Platform · observed over time</p>
+          <h2>Trnava</h2>
+          <div class="lab">
+            <p class="lab-label">Agroecology Living Lab · change is co-created</p>
+            <h3>Slovakia</h3>
+          </div>
+          <p class="relation">Relationship in one line: to be written by ILE.</p>
+        </article>
+      </div>
+      <section class="legend">
+        <div>
+          <p class="kicker">Visual device</p>
+          <div class="swatch platform">
+            <i aria-hidden="true"></i>
+            <p>Outer: the LTSER Platform, where change is observed over time.</p>
+          </div>
+          <div class="swatch lab">
+            <i aria-hidden="true"></i>
+            <p>Inner: the Living Lab, where change is co-created. Nested so overlap and nesting both read.</p>
+          </div>
+        </div>
+        <div>
+          <p class="kicker">How this meets the live map</p>
+          <p class="note">
+            The landing page already uses a dotted map of Europe with pins in
+            Romania, Slovakia, France and Spain. If Option A is chosen, that
+            map stays as the single map for the merged section. Each pin would
+            open a paired entry like the cards above, instead of a country-only
+            card plus a separate observation section.
+          </p>
+          <p class="note">
+            Decision sits with the four Platform teams at the KoM: CSIC, CEBC,
+            UB and SCDA, and ILE. Option B keeps two sections and only
+            retitles observation as “Rooted in long-term research”.
+          </p>
+        </div>
+      </section>
+      <footer>
+        Source: CSIC feedback on the landing page structure proposal. Living Lab
+        names remain a creative endeavour by each partner; Platform names are
+        the ones supplied in that document.
+      </footer>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,351 @@
+---
+description: Project rules for the multilingual Next.js landing page (structure, tokens, i18n, interface feel, motion, editorial-tech design, changelog)
+alwaysApply: true
+---
+
+## 1. Principles
+
+- Prefer boring, explicit, readable code over clever code.
+- Build the system first, then the pages. Every new value (color, size, duration) is a token before it is a class.
+- Reuse before creating. Before writing a component, check whether an existing one can be extended through props or variants.
+- Do not add a dependency without stating why and getting approval. Default to none. (`next-intl` is pre-approved.)
+- Do not build features, pages, or abstractions that were not requested.
+- If a requirement is unclear, ask. Do not fill gaps with invented content or design.
+- Every component is written multilingual-ready and interface-feel-compliant from its first line. Neither is retrofitted.
+
+## 2. Folder structure
+
+```
+messages/
+  en.json                 # source of truth
+  pt-PT.json              # must mirror en.json keys exactly
+src/
+  app/
+    [locale]/
+      layout.tsx          # <html lang>, fonts, NextIntlClientProvider, MotionProvider, shell
+      page.tsx            # composes sections only; no markup logic
+      not-found.tsx
+    globals.css           # tailwind import, @theme tokens, base layer
+    sitemap.ts            # includes per-locale alternates
+    robots.ts
+  i18n/
+    routing.ts            # locales, defaultLocale, localePrefix
+    request.ts            # getRequestConfig, loads messages
+    navigation.ts         # localized Link, redirect, usePathname, useRouter
+  proxy.ts                # locale negotiation (named middleware.ts on Next.js < 16)
+  components/
+    ui/                   # primitives: Button, Badge, Card, Heading, Text, Container, Icon,
+                          # Eyebrow, DisplayHeading, SectionIndex, ImageCard, AvatarStack,
+                          # Accordion, Carousel, VideoBackground...
+    layout/               # Header, Footer, Nav, Section, LanguageSwitcher
+    sections/             # Hero, Features, Pricing, FAQ, CTA... (one folder per section)
+    motion/               # Reveal, Stagger, IconSwap, CountUp, Marquee, ScrollStack,
+                          # presets, MotionProvider
+  content/                # non-translatable structured data only (see section 5)
+  config/
+    site.ts               # name, url, nav structure (message keys), social links, metadata defaults
+    motion.ts             # durations, easings, springs, stagger, distances
+  lib/
+    cn.ts                 # clsx + tailwind-merge
+    utils.ts
+  types/
+    global.d.ts           # next-intl type augmentation (typed message keys)
+public/
+  brand/                  # logo, favicons
+  images/
+  video/                  # compressed hero/background video + poster frames
+docs/
+CHANGELOG.md
+```
+
+Rules:
+- Use path alias `@/` for all imports. No deep relative imports (`../../../`).
+- One component per file. File name matches the export, PascalCase. Folders are kebab-case.
+- Section folders may contain private subcomponents that are only used by that section. Anything used by two or more sections moves to `components/ui` or `components/layout`.
+- Barrel files (`index.ts`) only at `components/ui`. Nowhere else.
+- Internal links and navigation always use `@/i18n/navigation`, never `next/link` or `next/navigation` directly.
+
+## 3. Design tokens and theming
+
+- All tokens live in one place: `@theme` in `globals.css` (Tailwind v4) or `tailwind.config.ts` (v3), backed by CSS variables.
+- Two token layers:
+  - **Primitive**: raw palette and scales (`--color-brand-500`, `--space-4`)
+  - **Semantic**: purpose-based (`--color-bg`, `--color-surface`, `--color-text`, `--color-text-muted`, `--color-border`, `--color-accent`, `--color-accent-foreground`). Components consume semantic tokens only, never primitives.
+- Dark mode (if in the design) is done by redefining semantic tokens under a `.dark` or `[data-theme]` selector. Components must not contain `dark:` overrides for colors. (The one exception is the image outline in section 7, which is defined as a semantic token so it also needs no override.)
+- Tokens to define at minimum: colors, font families, type scale (size + line-height + tracking), spacing/section rhythm, container widths, radii, shadows (layered, see section 7), z-index scale, breakpoints, motion durations, easings, springs, stagger delay, press scale, minimum hit area.
+- Forbidden in components: arbitrary values like `text-[17px]`, `bg-[#1a1a1a]`, `mt-[37px]`, raw hex/rgb/hsl, magic z-index numbers. If a needed value is not a token, add the token first.
+- Fonts via `next/font` with `display: swap`, exposed as CSS variables mapped to the theme. Confirm the font subset includes Portuguese glyphs (ã, õ, ç, á, é, í, ó, ú, â, ê, ô, à).
+
+## 4. Components
+
+- Server Components by default. Add `"use client"` only to the smallest leaf that needs state, effects, or motion. Never at a section root if avoidable.
+- Variants via `class-variance-authority` (cva) only if approved as a dependency; otherwise a typed variant map object. No long ternary chains for class names.
+- Merge classes with `cn()` (clsx + tailwind-merge). Every UI primitive accepts and merges `className`.
+- Props: explicit TypeScript interfaces, exported when reused. Extend native element props (`React.ComponentProps<"button">`) instead of redefining them. Use `React.ReactNode` for slots. Avoid boolean prop explosions; prefer a `variant` or `size` union.
+- UI primitives are language-agnostic: they never import translations. They receive text through `children` or props. Sections own the translation calls.
+- Polymorphism: use `asChild` or an `as` prop only where truly needed (e.g. Button rendering as a link).
+- Composition over configuration: `<Card><Card.Header/>...</Card>` or plain children, not 15 props.
+- Semantic HTML first: `header`, `nav`, `main`, `section` with `aria-labelledby`, `footer`, `ul/li` for lists, `button` vs `a` used correctly. One `h1` per page, heading levels never skipped.
+- A `Section` layout component owns vertical rhythm, container width, and the anchor `id`. Sections must not re-implement padding or max-width.
+- Do not create wrapper components that add nothing.
+- Interactive primitives (Button, links, toggles, inputs) ship with all states designed from the start: default, hover, focus-visible, active/pressed, disabled, and loading where relevant.
+
+## 5. Internationalization and content
+
+**Setup**
+- Library: `next-intl`, App Router integration, `[locale]` segment.
+- Locales: `["en", "pt-PT"]`, `defaultLocale: "en"`. Use `localePrefix: "as-needed"` (English at `/`, Portuguese under its prefix) unless we agree otherwise in Phase 0.
+- `setRequestLocale(locale)` in every layout and page, plus `generateStaticParams`, so pages stay statically rendered.
+- `<html lang={locale}>` set in the locale layout. Validate the incoming locale and call `notFound()` for unknown ones.
+
+**Messages**
+- All user-visible text lives in `messages/{locale}.json`. No literal strings in JSX, `aria-label`, `alt`, `title`, placeholders, or metadata.
+- Structure keys by section, semantic not text-derived: `hero.title`, `pricing.plans.pro.cta`. Never `hero.buildFasterToday`.
+- `en.json` is the source of truth. Augment next-intl types so keys and rich-text tags are type-checked. `pt-PT.json` must match its shape exactly. Add a `check:i18n` script that fails when keys are missing or extra, and include it in `check`.
+- Never concatenate translated fragments to build a sentence. Use ICU placeholders (`{name}`), ICU plurals, and `t.rich()` for inline links and emphasis. Word order differs between languages.
+- Server Components use `getTranslations`. Client Components use `useTranslations` and only receive the messages namespace they need through the provider.
+- Numbers, dates, and currencies go through `useFormatter` / `getFormatter`, never hand-formatted.
+
+**Portuguese (Portugal) rules**
+- Use European Portuguese vocabulary and spelling: *ecrã* (not tela), *utilizador* (not usuário), *telemóvel* (not celular), *ficheiro* (not arquivo), *equipa* (not equipe), *registar/registo*, *subscrição*, *contacto*. Use the "tu"/"você"/impersonal register decided in Phase 0 consistently.
+- If final `pt-PT` copy exists in `/docs/copy`, use it verbatim. If not, draft it, and list every drafted key under **Known issues** in the changelog as "needs native review". Never present a machine draft as final.
+- Portuguese runs roughly 15 to 30 percent longer than English. No fixed widths or heights on text containers, no truncation to hide overflow. Test every section in both languages.
+
+**Routing, SEO, and switching**
+- Locale detection in `proxy.ts` (`middleware.ts` before Next.js 16) via `next-intl`, with the preference persisted in its cookie.
+- `generateMetadata` per locale: translated title, description, Open Graph, Twitter, `og:locale` (`en_US`, `pt_PT`).
+- `alternates.languages` with `hreflang` for `en`, `pt-PT`, and `x-default` (pointing to English), plus a self-referencing canonical per locale.
+- `sitemap.ts` lists every locale URL with its alternates. JSON-LD uses `inLanguage`.
+- `LanguageSwitcher` in the header and footer: shows language names in their own language (`English`, `Português`), never flags, since flags represent countries, not languages. Each option has the correct `lang` and `hreflang`, keeps the current path and hash, is keyboard accessible, and announces the current language.
+- Use logical Tailwind properties (`ms-*`, `me-*`, `ps-*`, `pe-*`, `start-*`, `end-*`, `text-start`) instead of left/right where direction could matter, to keep future RTL languages possible.
+
+**Non-translatable content**
+- `src/content/*.ts` only holds structured non-text data: image paths, icon names, link targets, numeric values, ordering. Text is referenced by message key.
+- Repeated items render with `.map()` over typed arrays with stable keys (never array index for reorderable data).
+- Global values (site name, URLs, nav structure, socials) come from `config/site.ts`.
+- No lorem ipsum or placeholder text in final code. If copy is missing, leave a clearly marked key and flag it in the reply.
+
+## 6. Styling (Tailwind)
+
+- Mobile-first: base styles are mobile, then `sm:`, `md:`, `lg:`, `xl:`.
+- Use the token-backed utilities (`text-muted`, `bg-surface`, `rounded-lg`) not one-off values.
+- Class order is enforced by `prettier-plugin-tailwindcss`.
+- If the same class string appears 3+ times, extract a component or variant. Do not use `@apply` except in the base layer for global elements.
+- Fluid type via `clamp()` defined inside the type-scale tokens, not scattered in components.
+- Layout with grid/flex and gap. No margin hacks, no fixed heights on content containers, no `!important`.
+- Express every polish detail in Tailwind. Never introduce a second styling system.
+
+## 7. Interface feel (make-interfaces-feel-better)
+
+Source: https://github.com/jakubkrehel/make-interfaces-feel-better. If the skill is installed, load and follow it. The following is the condensed, mandatory version. These are requirements for every component at creation time.
+
+**Surfaces**
+- **Concentric radius**: outer radius = inner radius + padding. Define radius tokens so nesting is computed, not eyeballed. Never use the same radius on a parent and its padded child.
+- **Shadows for elevation, borders for structure**: cards, buttons, and containers whose border only fakes depth use layered, transparent `box-shadow` tokens. Keep real borders for dividers, layout separation, and selected/focus states.
+- **Image outlines**: images get a `1px` outline, `outline-offset: -1px`, in **pure** black at 10% in light mode (`oklch(0 0 0 / 0.1)`) and **pure** white at 10% in dark mode (`oklch(1 0 0 / 0.1)`). Never a tinted neutral (slate, zinc). Defined once as a semantic token.
+- **Hit areas**: interactive elements are at least 44×44px on touch, and never below 40×40px on dense desktop UI. If the visible element is smaller, extend with a pseudo-element. Hit areas of neighbouring elements must never overlap.
+- **Optical alignment**: when geometric centering looks off (icon + label buttons, play triangles, asymmetric icons), align optically with padding or by fixing the SVG. Icon-adjacent padding is usually slightly smaller on the icon side.
+
+**Typography**
+- `-webkit-font-smoothing: antialiased` on the root (`antialiased` in Tailwind).
+- `text-wrap: balance` on headings, `text-wrap: pretty` on body text. Verify in both languages.
+- `font-variant-numeric: tabular-nums` (`tabular-nums`) on any number that updates or aligns in columns (counters, prices, stats, timers).
+
+**Animations**
+- **Interruptible by default**: interactive state changes (hover, focus, press, toggles) use CSS transitions, which can be interrupted mid-flight. Keyframes only for staged sequences that run once.
+- **Never `transition: all`.** Always list exact properties (`transition-transform`, `transition-[opacity,scale]`).
+- **Scale on press**: `scale(0.96)`, always. Never below `0.95`. Buttons accept a `static` prop to disable it. Value comes from a token.
+- **Enters**: split into semantic chunks and stagger by about 100ms **only** for infrequent staged entrances (hero, section reveals). Never stagger routine or high-frequency interactions. Use `ease-out`.
+- **Exits**: softer than enters. Small fixed `translateY`, never full height. `ease-out`.
+- **Icon swaps** (copy → check, menu → close, theme toggle): animate `opacity` 0→1, `scale` 0.25→1, `blur` 4px→0px, exactly those values. With Motion: `transition: { type: "spring", duration: 0.3, bounce: 0 }`. Bounce is always `0`. Without Motion: keep both icons in the DOM, one absolutely positioned, and cross-fade with `cubic-bezier(0.2, 0, 0, 1)`. Ship this as the reusable `IconSwap` component.
+- **Skip animation on load**: `initial={false}` on `AnimatePresence`. Intentional entrance animations (e.g. hero) are the explicit exception and must be verified.
+- **`will-change`**: only `transform`, `opacity`, `filter`, only when first-frame stutter is observed. Never `will-change: all`.
+- **Motion restraint**: no custom animation on high-frequency interactions (hover on lists, typing, repeated clicks). Use instant feedback or an opacity/color transition of 150ms or less. Motion is never the only feedback: every animated change also has a static cue (color, icon, or label).
+
+**Icons**
+- One icon set only. Never mix libraries on one surface.
+- Stroke `1.5px` beside regular (400) text, `2px` beside semibold (600).
+- One SVG per icon using `currentColor`. Hover/selected/disabled states come from CSS color and opacity, never from separate assets.
+- Outline is the default variant. Fill marks the active or selected state.
+- Directional icons (arrows, chevrons) must flip correctly in RTL via logical utilities.
+
+**Review process**
+- After every section: run a `quick` review (primary path and highest-traffic states, HIGH and MEDIUM only) and fix everything found before moving on.
+- Phase 3: run a `full` review across typography, surfaces, animations, icons, and performance.
+- Walk every state (hover, focus, active, loading, empty) and replay motion at 10% speed in the browser's Animations panel. Whatever feels off at 10% is subtly wrong at full speed.
+- Report the verdict (`Approve` / `Needs changes` / `Block`), what was fixed, considered-but-rejected candidates, and anything **Not verified**. Record it in the changelog.
+
+## 8. Motion (Motion library)
+
+- Import from `motion/react`.
+- Wrap the app in one `MotionProvider` using `LazyMotion` with `domAnimation` and use the `m` component to keep the bundle small. Set `MotionConfig reducedMotion="user"`.
+- All durations, easings, springs, distances, and stagger values come from `config/motion.ts`. No inline magic numbers in components.
+- Build a small set of reusable primitives (`Reveal`, `Stagger`, `IconSwap`, etc.) and use them. Sections do not hand-roll `initial/animate/transition`.
+- Use Motion for enter/exit and orchestrated sequences. Use CSS transitions for hover, focus, and press (see section 7).
+- Animate `transform`, `opacity`, and `filter` only. Never animate layout properties (width, height, top, left) unless via the `layout` prop with a reason.
+- Scroll reveals use `whileInView` with `viewport={{ once: true, margin: ... }}` and are applied to section-level chunks, not to every element on the page.
+- Above-the-fold animation is subtle and short. It must not delay LCP or cause layout shift.
+- Every animation degrades to static content under `prefers-reduced-motion`.
+- Language switching must not replay entrance animations or cause layout jumps.
+
+## 9. TypeScript
+
+- `strict: true`, `noUncheckedIndexedAccess: true`.
+- No `any`, no `as` casts to silence errors, no `@ts-ignore`. Use `unknown` and narrow, or fix the type.
+- Prefer `type` for unions and props, `interface` when extending. Use `satisfies` for typed config/content objects.
+- Export types from where they are defined. No duplicated type declarations.
+- No enums; use string literal unions or `as const` objects.
+- Locale type derives from `routing.locales`, never redeclared.
+
+## 10. Accessibility
+
+- Color contrast meets WCAG AA at minimum for all token pairings; verify the semantic token pairs.
+- Visible, consistent `:focus-visible` styles from a token.
+- All interactive elements are reachable and operable by keyboard.
+- Images: meaningful, translated `alt`, or `alt=""` for decorative. Decorative SVGs get `aria-hidden`.
+- Add a translated "Skip to content" link.
+- Mobile nav: focus trap, `Escape` to close, correct `aria-expanded` / `aria-controls`.
+- No information conveyed by color alone or by motion alone.
+- Any text in another language inside a page (e.g. the language names in the switcher) carries the right `lang` attribute.
+
+## 11. Performance and SEO
+
+- `next/image` for every raster image with explicit dimensions or `fill` + `sizes`. Priority only on the LCP image.
+- SVG logo/icons inlined or via a single icon system. Icon library imports are per-icon, never the whole package.
+- No layout shift: reserve space for images, fonts, animated elements, and longer translated text.
+- Metadata through the App Router Metadata API (see section 5 for locale handling): title template, description, canonical, Open Graph, Twitter, icons, `metadataBase`. JSON-LD via a small typed component.
+- `sitemap.ts` and `robots.ts` generated.
+- Send only the messages a client component needs. Do not ship the full message file to the browser.
+- Avoid client-side data fetching and heavy third-party scripts. Load any analytics with `next/script` and a non-blocking strategy.
+
+## 12. Code quality
+
+- No dead code, no commented-out blocks, no unused exports or imports, no `console.log`.
+- Comments explain *why*, never *what*. No comments that narrate the code.
+- Names are specific: `PricingCard`, not `Card2`; `isMenuOpen`, not `flag`.
+- Functions and components stay small; if a component exceeds about 120 lines, split it.
+- Env vars validated and typed in one place if any are used. No secrets in the client bundle.
+- ESLint (`next/core-web-vitals`, `typescript-eslint`) and Prettier configured and passing. Add `typecheck`, `check:i18n`, and a `check` script that runs lint, typecheck, i18n check, and build.
+- Commit-ready state: every reply that changes code leaves the project building.
+
+## 13. Communication rules for the AI
+
+- Before large changes, state the plan in a few lines.
+- After changes, report: files created/modified, new tokens, new message keys, new dependencies, deviations from these rules with reasons, and open questions.
+- Never silently change design tokens or copy.
+- Never add a string in one language without adding it in the other in the same change.
+- If a rule here conflicts with a request, say so and ask before proceeding.
+
+## 14. Editorial-tech design language and inspiration patterns
+
+**Reference sites** (style references only; see precedence below):
+
+| Site | Patterns worth studying |
+| --- | --- |
+| Farmio, https://farmio.framer.website/ | Video/background hero with eyebrow and oversized headline; stat row; sticky stacked services with a `01/05` counter and a bracketed scroll hint; three-step "how it works"; mixed-ratio gallery; carousel testimonials; accordion FAQ; full-bleed CTA; large footer |
+| GreenRoots, https://greenroots-agriculture.framer.website/ | Giant stacked wordmark over a video hero; uppercase eyebrow labels; three-stat row; services as a link list; three-tier pricing; testimonial beside a large image; quote form; newsletter footer with an oversized wordmark and back-to-top |
+| Agronex, https://agronex.framer.website/ | Rounded full-width hero image; tall portrait image cards in a row; numbered benefits `01` to `03`; big-number impact stats; testimonial slider with image; newsletter footer |
+| Verdano, https://verdano.framer.website/#services | Video hero with avatar-stack social proof (count and rating); animated stat numbers; partner logo marquee; mixed-aspect services grid; feature accordion; pricing with a billing-period toggle; large quote testimonial; contact form beside an image |
+
+**Shared design language** to carry into our design (using our tokens, not theirs):
+- Oversized display headlines with tight tracking, always paired with a small eyebrow label above (uppercase or bracketed) and often a numeric index (`01/05`)
+- Big numerals for stats, with a short caption beneath
+- Large-radius image cards, portrait and mixed aspect ratios, full-bleed imagery, one video hero
+- Generous whitespace, a strong and consistent vertical rhythm, one accent color, pill-shaped buttons
+- Scroll-linked storytelling used sparingly: a sticky stack, a marquee, count-up numbers
+- An oversized footer wordmark closing the page
+
+**Precedence and originality**
+- Order of authority: our design variables and copy, then these project rules and the interface-feel standard (section 7), then the references. The references never override the first two.
+- Never reproduce a reference layout pixel for pixel, or reuse its copy, imagery, video, icons, or branding. Recombine the patterns into our own composition.
+- Do not derive colors, fonts, or spacing from the references. Those come from `/docs/design`.
+- Only build sections that exist in our copy. If our content has no pricing, we build no pricing.
+
+**Pattern to component mapping and constraints**
+
+- `Eyebrow`, `DisplayHeading`, `SectionIndex`: display sizes come from fluid `clamp()` type tokens. Headings use `text-wrap: balance`, and `hyphens: auto` (which needs the correct `lang`) so long Portuguese words do not overflow at large sizes. Test every display heading in both languages at 320px and 1920px. The index and any bracketed hint (e.g. "[ Keep Scrolling ]") are translated strings, and the bracket style is CSS or a fixed component detail, not part of the message.
+- `CountUp` (stats): animates once when it enters view. Final value is in the DOM as real text and readable by assistive tech. Uses `tabular-nums` so digits do not shift. Values and suffixes (`K+`, `%`, `B`) are formatted with the locale formatter. Shows the final value immediately under reduced motion. No layout shift while counting.
+- `Marquee` (logos, ticker): CSS-driven `transform` loop. The duplicated track is `aria-hidden`. Pauses on hover and focus, and is static under reduced motion. Logos have accessible names. Do not put essential information only inside a moving element.
+- `ScrollStack` (sticky stacked services or benefits): built on native `position: sticky` with Motion `useScroll` and `useTransform` driving `transform` and `opacity` only. Never hijack or lock native scrolling. Content is fully readable and correctly ordered without JS, on mobile, and under reduced motion, where it collapses to a normal vertical list. The counter is derived from scroll state. At most one scroll-linked signature moment per page unless approved in Phase 0.
+- `Accordion` (FAQ, feature list): keyboard operable with correct `aria-expanded` and `aria-controls`, or native `<details>`. One consistent open/close animation of 200ms or less from tokens. The answer text is in the DOM for SEO. FAQ content also emitted as `FAQPage` JSON-LD per locale.
+- `Carousel` (testimonials): scroll-snap based, keyboard and swipe operable, visible previous/next buttons with translated accessible labels, and a position indicator. No autoplay by default, and if added it must be pausable and off under reduced motion.
+- `ImageCard` and gallery: mixed aspect ratios via tokens, `next/image` with `sizes`, concentric radius when nested, and the image outline from section 7. Reserve space so nothing shifts.
+- `VideoBackground` (hero): `muted`, `loop`, `playsInline`, no audio track, with a poster. The poster is the LCP element (`next/image`, `priority`), and the video loads after it (`preload="metadata"` or lazy attach) and pauses when off-screen. Under reduced motion or data-saver, show only the poster. Ship compressed WebM/MP4 and agree a size budget in Phase 0. Only one video above the fold, and text over media must meet AA contrast using a token-based scrim.
+- `AvatarStack` (social proof): decorative avatars get `alt=""`. The count and rating are real text and translated. Do not invent numbers, ratings, or testimonials. Use only what exists in `/docs/copy`.
+- `PricingToggle` (billing period), only if pricing exists in the copy: accessible switch or radio group, a static cue for the active state, prices and currency through the formatter, and `tabular-nums`.
+- Oversized footer wordmark: use the logo SVG or fluid text sized with `clamp()`. If it duplicates the visible logo it is `aria-hidden`. It must never cause horizontal overflow, in either language.
+
+**Motion budget** (the references animate heavily, we do not):
+- Allowed by default: one hero entrance, one scroll-linked signature moment, count-up on stats, and at most one marquee.
+- Everything else uses static layout or short CSS transitions, per the motion restraint rule in section 7.
+- Anything beyond this budget needs approval in Phase 0 and a reason recorded in the changelog.
+
+**Media performance guardrails**
+- Every image through `next/image` in AVIF/WebP with `sizes`. Only the LCP image is `priority`.
+- No autoplaying media that blocks LCP, no layout shift from late-loading media, and no third-party embeds without approval.
+- Test on a throttled mobile connection. If the video or scroll effects hurt Lighthouse Performance below the target, cut the effect, not the target.
+
+## Changelog rule
+
+Maintain `/CHANGELOG.md` at the repo root. It reads like an **end-of-day report to a project lead**: what moved forward, what was decided, and what needs attention. It is not an edit log. Git history already records every individual change.
+
+### One entry per day, showing the final state
+
+- There is **one entry per working day**, headed by the date. The first change of the day creates it. Every later change that day **edits that same entry**; it never adds a second one.
+- Record the **net result at the end of the day**, not the steps taken to get there:
+  - Something changed several times (a font size tuned 10 times) is one bullet describing where it ended up.
+  - Something added and then removed on the same day does not appear at all.
+  - A revert is not an item. Reword the original bullet or delete it.
+  - A later fix to something built the same day goes into that thing's bullet, not into a separate "Fixed" line.
+- Before touching the entry, re-read today's entry and merge into the existing bullets. Add a new bullet only for a genuinely new outcome.
+- Entries from past days are final. Do not rewrite them. If something from a past day changes, report the new state in today's entry.
+
+### What is worth a bullet
+
+Write about outcomes a lead would care about: a section or page shipped, a visible design change, a new behaviour, a decision, a new dependency, a problem found or solved, an open blocker. Group related work under one bullet ("Header: clear over the hero, hides on scroll down, returns solid on scroll up") instead of listing each tweak.
+
+Leave out: file lists, class names, pixel-level tuning steps, typo or formatting fixes, and anything the reader cannot act on. Mention a file, token, or key only when a future developer really needs it (for example a new token family or a placeholder that must be replaced).
+
+### Format
+
+Newest day at the top, under `## [Unreleased]`. Date format `YYYY-MM-DD`. Sections with nothing to say are **omitted**, not filled with `(none)`. Aim for something that fits on one screen; a heavy day might need 25 bullets, a light day 3.
+
+```md
+## [Unreleased]
+
+### 2026-10-01
+
+**Summary**
+Two to four plain sentences: what moved forward today and where the project stands now.
+
+**Done**
+- **Hero:** full-screen photograph with a light scrim; headline on the display scale with an italic accent word.
+- **Header:** clear over the hero on the landing page, hides on scroll down, comes back solid on scroll up.
+- **Design system:** Inter for body text; the page base is now white and the footer sits on Deep Forest.
+
+**Decisions**
+- Inter for body text departs from the moodboard (which names Sora); chosen for readability at long lengths.
+
+**Needs attention**
+- Portuguese copy is a machine draft and needs native review (all `pt-PT` keys added today).
+- Missing assets: partner logos, Spain Living Lab photo.
+- Not verified: Lighthouse on a production host.
+
+**Technical notes**
+- Dependencies: added `lenis` (smooth scrolling, approved).
+- Tokens: new `--font-body`, inverse colour set (`--color-bg-inverse`, ...); removed `--color-scrim`.
+- Messages: new `livingLabs.labs.*.imageAlt`; removed `footer.wordmark`.
+
+**Checks**
+typecheck pass · lint pass · i18n pass · build pass · checked at 390 / 1440 in en and pt-PT
+```
+
+### Rules for entries
+
+- Plain language, complete sentences, specific outcomes. Never "various improvements".
+- **Always reported, even when small:** dependencies added, removed, or upgraded; the net set of tokens and message-key groups added or removed; deviations from these rules or the design docs, with the reason; motion-budget exceptions.
+- Every machine-drafted or unreviewed translation stays listed under **Needs attention** in each day's entry until a human confirms it.
+- Interface-feel reviews appear as one line under **Done** (mode, verdict, what was fixed) and anything not verified goes under **Needs attention**.
+- **Checks** is the state at the end of the day, not a history of runs. If a check was not re-run after the last change, say so.
+- When a milestone is complete (e.g. Phase 1 done, launch), convert `[Unreleased]` into a version heading like `## [0.1.0] - YYYY-MM-DD` and start a fresh `[Unreleased]`.
+- The final message of every major task must end with: `Changelog updated: <YYYY-MM-DD> report`.
