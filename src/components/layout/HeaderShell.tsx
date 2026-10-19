@@ -74,14 +74,16 @@ export function HeaderShell({ children }: HeaderShellProps) {
       {isHome ? null : <div className="h-header" aria-hidden="true" />}
       <header
         className={cn(
-          "group/header z-sticky duration-slow fixed inset-x-0 top-0 transition-[translate,background-color,color] ease-out motion-reduce:transition-none",
-          clear ? "bg-transparent" : "bg-bg",
+          "group/header duration-slow fixed inset-x-0 top-0 transition-[translate,background-color,color] ease-out motion-reduce:transition-none",
+          menuOpen ? "z-modal" : "z-sticky",
+          clear || menuOpen ? "bg-transparent" : "bg-bg",
           isHidden && "-translate-y-full",
           "[&_a:focus-visible]:outline-focus-ring [&_button:focus-visible]:outline-focus-ring",
           "data-[surface=clear]:[&_a:focus-visible]:outline-focus-ring-inverse",
           "data-[surface=clear]:[&_button:focus-visible]:outline-focus-ring-inverse",
         )}
         data-surface={clear ? "clear" : "solid"}
+        data-menu={menuOpen ? "open" : undefined}
         data-hidden={isHidden ? "true" : undefined}
         onFocusCapture={() => setFocused(true)}
         onBlurCapture={(event) => {

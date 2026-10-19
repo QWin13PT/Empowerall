@@ -8,12 +8,20 @@ import { routing, type Locale } from "@/i18n/routing";
 import { Icon } from "@/components/ui/Icon";
 import { cn } from "@/lib/cn";
 
+type LanguageSwitcherTone = "default" | "inverse";
+
+const triggerTone = {
+  default:
+    "text-text hover:bg-bg-subtle group-data-[surface=clear]/header:text-text-on-media group-data-[surface=clear]/header:hover:bg-text-on-media/10 group-data-[menu=open]/header:hover:bg-bg",
+  inverse: "text-text-inverse hover:bg-text-inverse/10",
+} as const satisfies Record<LanguageSwitcherTone, string>;
+
 type LanguageSwitcherProps = {
   labels: Record<Locale, string>;
   shortLabels: Record<Locale, string>;
   groupLabel: string;
   currentLabel: string;
-  tone?: "default" | "inverse";
+  tone?: LanguageSwitcherTone;
 };
 
 export function LanguageSwitcher({
@@ -62,9 +70,7 @@ export function LanguageSwitcher({
         type="button"
         className={cn(
           "min-h-hit min-w-hit rounded-pill text-body-sm duration-fast active:scale-press inline-flex items-center justify-center gap-1 px-3 font-sans font-semibold tracking-wide transition-[background-color,transform,color] ease-out",
-          tone === "inverse"
-            ? "text-text-inverse hover:bg-text-inverse/10"
-            : "text-text hover:bg-bg-subtle group-data-[surface=clear]/header:text-text-on-media group-data-[surface=clear]/header:hover:bg-text-on-media/10",
+          triggerTone[tone],
         )}
         aria-expanded={open}
         aria-haspopup="listbox"

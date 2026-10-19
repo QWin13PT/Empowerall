@@ -4,6 +4,28 @@ All notable work on the EMPOWERALL landing page is recorded here, as one report 
 
 ## [Unreleased]
 
+### 2026-10-19
+
+**Summary**
+The mobile menu is a full-screen sand panel that slides in from the right. It uses the existing header wordmark, language control and menu button, which stay above the panel; the hamburger becomes a close icon while it is open.
+
+**Done**
+- **Mobile menu:** a full-viewport sand panel from the right. The real header sits above it (raised stacking, transparent so the sand shows through), so there is no second logo or close row. The hamburger stays white over the hero; while the menu is open it becomes a white close icon on Deep Forest so it still reads on sand. Section links use the large heading size and lift to white on hover. Escape, the header close icon, a section link, and the wordmark all dismiss it. Quick interface-feel review: Approve.
+
+**Decisions**
+- The panel exits by sliding fully back off the right edge, rather than a small offset, so it leaves the way it arrived. This is a documented departure from the usual “subtle exit” rule.
+
+**Needs attention**
+- Every Portuguese string is a machine draft in impersonal European Portuguese and needs native review.
+- Not verified: reduced motion in the Animations panel; Lighthouse on a production host.
+
+**Technical notes**
+- No new dependencies, tokens, or message keys. While the menu is open the header uses `z-modal` over the panel’s `z-overlay`.
+- Deviation: menu exit uses a full-width slide (`x: 100%`) with `duration.base`, not a small translate.
+
+**Checks**
+typecheck pass · lint pass · i18n pass (no message changes) · build not re-run after this pass · checked at 390 in pt-PT (open, close, existing header chrome over the panel)
+
 ### 2026-10-01
 
 **Summary**
