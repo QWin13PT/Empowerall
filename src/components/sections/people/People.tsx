@@ -8,27 +8,31 @@ export async function People() {
   const t = await getTranslations();
 
   return (
-    <Section id="people" labelledBy="people-title" tone="subtle">
+    <Section id="people" labelledBy="people-title" tone="inverse">
       <Container width="wide">
         <Reveal className="max-w-narrow">
-          <Eyebrow>{t("people.eyebrow")}</Eyebrow>
-          <DisplayHeading as="h2" id="people-title" size="md" className="mt-4">
+          <Eyebrow className="text-text-inverse-muted">
+            {t("people.eyebrow")}
+          </Eyebrow>
+          <DisplayHeading
+            as="h2"
+            id="people-title"
+            size="md"
+            className="text-text-inverse mt-4"
+          >
             {t("people.title")}
           </DisplayHeading>
-          <Text tone="muted" className="mt-5">
+          <Text tone="inverseMuted" className="mt-5">
             {t("people.intro")}
           </Text>
         </Reveal>
         <ul className="mt-12 grid gap-x-10 gap-y-6 md:grid-cols-2">
           {peopleActors.map((actor, index) => (
-            <li
-              key={actor.id}
-              className="border-t border-border pt-4"
-            >
-              <p className="font-sans text-body-sm tabular-nums text-text-muted">
+            <li key={actor.id} className="border-border-inverse border-t pt-4">
+              <p className="text-body-sm text-text-inverse-muted font-sans tabular-nums">
                 {String(index + 1).padStart(2, "0")}
               </p>
-              <p className="mt-2 font-sans text-display-md font-semibold text-text">
+              <p className="text-display-md text-text-inverse mt-2 font-sans font-semibold">
                 {t(actor.labelKey)}
               </p>
             </li>

@@ -7,7 +7,7 @@ const twMerge = extendTailwindMerge({
       "font-family": [{ font: ["body"] }],
       h: [{ h: ["wordmark"] }],
       w: [{ w: ["wordmark", "map-card", "glass-card"] }],
-      "max-w": [{ "max-w": ["glass-card"] }],
+      "max-w": [{ "max-w": ["glass-card", "map"] }],
       "outline-color": [
         { outline: ["image-outline", "image-outline-inverse"] },
       ],
@@ -25,6 +25,7 @@ const twMerge = extendTailwindMerge({
             "body-sm",
             "eyebrow",
             "stat",
+            "stat-range",
             "wordmark",
           ],
         },

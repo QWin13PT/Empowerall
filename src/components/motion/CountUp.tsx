@@ -13,7 +13,10 @@ type CountUpProps = {
 
 export function CountUp({ value, formatted, className }: CountUpProps) {
   const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true, margin: motionConfig.viewport.margin });
+  const inView = useInView(ref, {
+    once: true,
+    margin: motionConfig.viewport.countUpMargin,
+  });
   const reduced = useReducedMotion();
   const [frameValue, setFrameValue] = useState(0);
   const [finished, setFinished] = useState(false);
@@ -43,7 +46,8 @@ export function CountUp({ value, formatted, className }: CountUpProps) {
     return () => cancelAnimationFrame(frame);
   }, [inView, reduced, value]);
 
-  const display = reduced ? formatted : finished ? formatted : String(frameValue);
+  const display =
+    reduced || !inView || finished ? formatted : String(frameValue);
 
   return (
     <span ref={ref} className={cn("tabular-nums", className)}>

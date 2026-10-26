@@ -6,6 +6,7 @@ import { Section } from "@/components/layout/Section";
 import { Button, Container, DisplayHeading, Icon, Text } from "@/components/ui";
 import { media } from "@/content/media";
 import { HeroBackground } from "@/components/sections/hero/HeroBackground";
+import { KeyFacts } from "@/components/sections/hero/KeyFacts";
 
 export async function Hero() {
   const t = await getTranslations();
@@ -35,16 +36,18 @@ export async function Hero() {
                       {chunks}
                     </em>
                   ),
+                  subline: (chunks) => (
+                    <span className="text-display-md mt-3 block font-medium">
+                      {chunks}
+                    </span>
+                  ),
                 })}
               </DisplayHeading>
             </StaggerItem>
             <StaggerItem>
-              <div className="max-w-narrow flex flex-col gap-3">
-                <Text size="lg" tone="inverse">
-                  {t("hero.description")}
-                </Text>
-                <Text tone="inverse">{t("hero.distinctive")}</Text>
-              </div>
+              <Text size="lg" tone="inverse" className="max-w-narrow">
+                {t("hero.description")} {t("hero.distinctive")}
+              </Text>
             </StaggerItem>
             <StaggerItem className="z-sticky relative">
               <Button asChild size="lg" variant="secondary">
@@ -55,6 +58,13 @@ export async function Hero() {
               </Button>
             </StaggerItem>
           </Stagger>
+        </Container>
+      </div>
+      <div className="bg-bg-subtle">
+        <Container width="wide" className="pt-10 md:pt-14">
+          <div className="border-border border-b pb-10 md:pb-14">
+            <KeyFacts />
+          </div>
         </Container>
       </div>
     </Section>

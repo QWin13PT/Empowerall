@@ -11,20 +11,19 @@ export const projectDateOptions = {
 
 export const keyFacts = [
   {
+    id: "duration",
+    kind: "dates",
+    unitKey: "hero.facts.duration.unit",
+    captionKey: "hero.facts.duration.caption",
+    captionCount: 3,
+  },
+  {
     id: "labs",
     kind: "count",
     value: 4,
     unitKey: "hero.facts.labs.unit",
     captionKey: "hero.facts.labs.caption",
     captionCount: 4,
-  },
-  {
-    id: "partners",
-    kind: "count",
-    value: 13,
-    unitKey: "hero.facts.partners.unit",
-    captionKey: "hero.facts.partners.caption",
-    captionCount: 7,
   },
   {
     id: "platforms",
@@ -34,8 +33,11 @@ export const keyFacts = [
     captionKey: "hero.facts.platforms.caption",
   },
   {
-    id: "duration",
-    kind: "dates",
-    unitKey: "hero.facts.duration.unit",
+    id: "partners",
+    kind: "count",
+    value: 13,
+    unitKey: "hero.facts.partners.unit",
+    captionKey: "hero.facts.partners.caption",
+    captionCount: 7,
   },
 ] as const;

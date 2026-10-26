@@ -17,6 +17,7 @@ export const motionConfig = {
   viewport: {
     once: true,
     margin: "-80px" as const,
+    countUpMargin: "0px" as const,
   },
   parallax: {
     /**

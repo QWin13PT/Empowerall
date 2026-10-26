@@ -1,64 +1,69 @@
 import { Eyebrow, Text } from "@/components/ui";
+import { cn } from "@/lib/cn";
+import { PartnerTile } from "./PartnerTile";
 
 type PartnerGroupItem = {
   id: string;
   name: string;
   href: string;
+  logos: readonly {
+    src: string;
+    width: number;
+    height: number;
+  }[];
 };
 
 type PartnerGroupBlock = {
   id: string;
   heading: string;
-  note: string | null;
   partners: PartnerGroupItem[];
 };
 
 type PartnerGroupsProps = {
   groups: PartnerGroupBlock[];
-  advisory: string;
+  connected: {
+    eyebrow: string;
+    body: string;
+  };
 };
 
-export function PartnerGroups({ groups, advisory }: PartnerGroupsProps) {
+export function PartnerGroups({ groups, connected }: PartnerGroupsProps) {
   return (
-    <div className="mt-12">
-      <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
-        {groups.map((group) => (
-          <div key={group.id}>
-            <Eyebrow>{group.heading}</Eyebrow>
-            <ul className="mt-4 flex flex-col">
-              {group.partners.map((partner) => (
-                <li
-                  key={partner.id}
-                  className="border-border border-t py-3 first:border-t-0 first:pt-0"
-                >
-                  {partner.href ? (
-                    <a
-                      href={partner.href}
-                      rel="noopener noreferrer"
-                      target="_blank"
-                      className="min-h-hit duration-fast active:scale-press text-heading-sm text-text inline-flex items-center font-sans font-medium text-pretty transition-[opacity,transform] ease-out hover:opacity-80"
-                    >
-                      {partner.name}
-                    </a>
-                  ) : (
-                    <p className="text-heading-sm text-text font-sans font-medium text-pretty">
-                      {partner.name}
-                    </p>
-                  )}
-                </li>
-              ))}
-            </ul>
-            {group.note ? (
-              <Text tone="muted" size="sm" className="mt-4">
-                {group.note}
-              </Text>
-            ) : null}
-          </div>
-        ))}
+    <div className="mt-12 flex flex-col gap-12">
+      {groups.map((group) => (
+        <div key={group.id}>
+          <Eyebrow>{group.heading}</Eyebrow>
+          <ul
+            className={cn(
+              "mt-5 grid gap-4",
+              group.partners.length === 1
+                ? "max-w-xs grid-cols-1"
+                : "grid-cols-2 md:grid-cols-3 lg:grid-cols-4",
+            )}
+          >
+            {group.partners.map((partner) => (
+              <li
+                key={partner.id}
+                className={
+                  partner.logos.length > 1 ? "md:col-span-2" : undefined
+                }
+              >
+                <PartnerTile
+                  name={partner.name}
+                  href={partner.href}
+                  logos={partner.logos}
+                />
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+      <div className="max-w-narrow">
+        <Eyebrow>{connected.eyebrow}</Eyebrow>
+        <Text tone="muted" className="mt-4">
+          {connected.body}
+        </Text>
       </div>
-      <Text tone="muted" size="sm" className="mt-8">
-        {advisory}
-      </Text>
     </div>
   );
 }

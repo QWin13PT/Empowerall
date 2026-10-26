@@ -4,6 +4,60 @@ All notable work on the EMPOWERALL landing page is recorded here, as one report 
 
 ## [Unreleased]
 
+### 2026-10-26
+
+**Summary**
+The header now sits above the hero call-to-action, so that button no longer covers the bar when they overlap. The hero description reads as one paragraph in a single size. Project duration shows both dates on one line. The Spain Living Lab card sits a little to the left, with its bottom resting on the People band. Árvore and GODS now show their logos in Partners. Funding acknowledgements sit on a light row above the dark footer, so the transparent logos stay readable.
+
+**Done**
+- **Header:** resting stacking is one step above the hero button. The button still sits above the bottom viewport blur; the bar covers it when they overlap. The open mobile menu still keeps the bar above the panel.
+- **Hero:** the two supporting sentences are one paragraph at the large body size. The wording is unchanged. On the facts bar, the project duration keeps both dates on one line, in the same green as the other figures, and centered on that row. The type scales with the column so the range still fits.
+- **Living Labs:** on large screens the Spain card sits a little to the left, and its bottom rests on the green People band so the card reads as sitting on top of that section. The other cards stay where they were.
+- **Partners:** Árvore and GODS show their logos. Each logo is the accessible name, so the bold name under those tiles is gone. GODS still links to ornitho79.org. Árvore has no site URL yet, so that tile is not a link.
+- **Footer:** Funding & acknowledgements is a light row above the charcoal block. The EU emblem and Agroecology Partnership logo sit on the page background, with the funding lines under them. Contact, navigation, copyright, and the wordmark stay on the dark footer.
+
+**Technical notes**
+- Tokens: `--text-stat-range`, sized from the stat column so the duration range stays on one line; `--spacing-stat-value`, so that range sits in the same band as the other figures.
+
+**Checks**
+typecheck, lint, i18n, and build not re-run · stacking checked in the browser: the bar covers the hero button where they meet · Spain card position checked at 1440 in en · Árvore and GODS logos checked at ~1180 and 390 in en · funding row checked at ~1180 and 390 in en (light band, then the dark footer) · hero description checked at desktop and 390 in en and pt-PT (one paragraph, same size, button still in view) · duration range checked at desktop and 390 in pt-PT, and earlier at desktop, 390, and 320 in en (both dates on one line, brand green, labels aligned with the other figures, no horizontal overflow)
+
+### 2026-10-22
+
+**Summary**
+The landing page now follows the v3 structure proposal and the partner email. Copy is updated throughout, the key facts sit directly under the hero, Living Labs absorbs long-term research, Observation is gone, and Partners is a grouped logo grid with UFZ shown beside eLTER RI. The footer always shows the EU funding emblem and the Agroecology Partnership logo.
+
+**Done**
+- **Hero:** headline is “Growing agroecology”, with only “agroecology” in the italic serif, and “New generation farmers & lasting knowledge” as a smaller sans subline. Supporting copy names Agroecology Living Labs and the LTSER Platforms. The key facts sit immediately under the photograph on the same sand as About, centred, with a container-width divider before the About copy. Duration is captioned “3 years” and LTSER Platforms “of eLTER RI”.
+- **Challenge and Needs:** lock-ins wording is on the page. Needs is titled “What is needed for change?” with the revised Access, Knowledge and Voice bodies.
+- **Approach:** six steps — Listen, Connect, Explore, Co-create, Learn & scale, Inform — with the v3 intro and bodies, including transdisciplinary action research and European-level policy recommendations.
+- **Living Labs:** the section is now “Living Labs & long-term research / Four places with a long memory.” On large screens the map sits on the left and the copy on the right, in two equal columns with the map capped at 36rem and smaller photo cards (10rem) so neither side feels cramped. Map pins sit on the four LTSER sites (Doñana, Plaine et Val de Sèvre, Trnava, Brăila Islands); the photo cards stay in their original corners, with connectors running from each site to its card. Observation has been removed.
+- **People:** Consumers sit after Local communities, matching the v3 order. People is in the header and footer navigation. The section sits on the dark forest band used by Needs, between Living Labs’ sand and Partners, which is now on the white page base.
+- **Partners:** static grouped grids replace the logo marquee. Coordinator is INGENIO (CSIC-UPV). Beneficiaries include CNRS/CEBC and Árvore in place of GLOBAZ. GODS and SAS DLR appear as bold names. UFZ sits with the eLTER RI logo, labelled “UFZ (eLTER RI)”. A “Connected to eLTER RI” note follows the grids. Logo tiles are flat, with no shadow outline.
+- **Footer:** “Follow EMPOWERALL”; a funding row with the EU “Funded by the European Union” emblem and the Agroecology Partnership logo; copyright “© 2026–2029 EMPOWERALL”. The footer now sits on a neutral charcoal instead of forest green, so it reads apart from the green People band.
+- **Interface-feel review:** quick, Approve on the facts strip, partner grids and funding row. Count-up now keeps the final number on screen when a stat is not yet intersecting, so the second-row “4 LTSER Platforms” no longer reads as zero on small screens.
+
+**Decisions**
+- v3 settled lock-ins, the merge of Living Labs with long-term research, and the method wording (Explore, transdisciplinary action research, Inform). Those are on the live site.
+- Coordinator stays in its own group and is not repeated under beneficiaries.
+- GLOBAZ is replaced by Árvore, as in the partner email. The full legal name was not supplied, so the page shows “Árvore”.
+- The Portuguese EU emblem lockup was not available from the Commission download centre this session, so both locales use the English “Funded by the European Union” mark; the accessible name is still translated.
+
+**Needs attention**
+- Every Portuguese string is a machine draft in impersonal European Portuguese and needs native review, including all keys added or rewritten today.
+- Missing assets: logos for Árvore and Agrosmart Cluster; Árvore’s full name; a Portuguese EU funding emblem; a Spain Living Lab photo; a dedicated About photograph.
+- Placeholders: six national funder logos, the required funding statement, footer email, social URLs, privacy and cookie links.
+- Living Lab descriptions and the one-line Living Lab / Platform relationship remain empty, pending partner copy.
+- Not verified: Lighthouse on a production host; reduced motion in the Animations panel; headline wrap at a true 320px viewport (checked around 400px in pt-PT, with no horizontal overflow).
+
+**Technical notes**
+- No new dependencies. Tokens: `--size-partner-logo`, `--size-partner-tile`, `--size-funding-logo`, `--container-map` (36rem), `--neutral-900` (#1c1c1c) with `--color-bg-footer` and `--color-border-footer` built on it; `--size-map-card` reduced from 12rem to 10rem; marquee tokens and CSS removed with the marquee.
+- Messages: added `nav.people`, `approach.steps.explore.*`, `approach.steps.inform.*`, `livingLabs.research`, `livingLabs.advisoryCouncil`, `livingLabs.tagline`, `partners.connected.*`, `partners.items.arvore`, `footer.nationalFundersPending`, `footer.euEmblemAlt`, `footer.agroecologyAlt`, `footer.copyright`, `hero.facts.duration.caption`. Restored `hero.facts.platforms.caption`. Removed `observation.*`, `partners.logosLabel`, `partners.associatedNote`, `partners.advisoryPlaceholder`, `partners.items.globaz`. 142 keys, English and Portuguese in sync.
+- Deviation: Count-up uses a `0px` in-view margin (`motionConfig.viewport.countUpMargin`) rather than the section reveal’s `-80px`, so numbers in the facts strip are not left at zero.
+
+**Checks**
+typecheck pass · lint pass · i18n pass (142 keys) · build not re-run after facts restyle · checked at 390 and 1440 in en (Living Labs map left / copy right on large screens; stacked on small)
+
 ### 2026-10-19
 
 **Summary**

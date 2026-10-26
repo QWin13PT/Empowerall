@@ -11,11 +11,12 @@ import { Container } from "@/components/ui/Container";
 import { Icon } from "@/components/ui/Icon";
 import { IconSwap } from "@/components/motion/IconSwap";
 import { motionConfig } from "@/config/motion";
+import { navItems } from "@/config/site";
 import { cn } from "@/lib/cn";
 
 type MobileNavItem = {
   id: string;
-  href: "/#about" | "/#approach" | "/#living-labs" | "/#partners";
+  href: (typeof navItems)[number]["href"];
   label: string;
 };
 

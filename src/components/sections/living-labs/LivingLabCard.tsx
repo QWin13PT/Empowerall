@@ -30,7 +30,7 @@ export function LivingLabCard({
         src={src}
         alt={alt}
         className="rounded-lg"
-        sizes="(min-width: 64rem) 12rem, (min-width: 40rem) 50vw, 100vw"
+        sizes="(min-width: 64rem) 10rem, (min-width: 40rem) 50vw, 100vw"
       />
       <div className="flex flex-col gap-1 px-1 pt-2 pb-1">
         <h3 className="text-heading-sm text-text font-sans font-semibold text-balance">

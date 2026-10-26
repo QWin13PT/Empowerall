@@ -1,13 +1,6 @@
 @import "tailwindcss";
 
 :root {
-  --mask-marquee: linear-gradient(
-    to right,
-    transparent,
-    black 8%,
-    black 92%,
-    transparent
-  );
   --forest-900: #062816;
   --forest-700: #0a4624;
   --forest-500: #0e582d;
@@ -22,6 +15,7 @@
   --sprout-500: #c5d982;
   --sprout-200: #e4f0c4;
   --ink-900: #1c2418;
+  --neutral-900: #1c1c1c;
   --white: #ffffff;
 }
 
@@ -40,6 +34,7 @@
   --color-sprout-500: var(--sprout-500);
   --color-sprout-200: var(--sprout-200);
   --color-ink-900: var(--ink-900);
+  --color-neutral-900: var(--neutral-900);
   --color-white: var(--white);
 
   --color-bg: var(--white);
@@ -57,6 +52,12 @@
   --color-border: var(--sand-300);
   --color-border-strong: var(--forest-500);
   --color-border-inverse: var(--forest-700);
+  --color-bg-footer: var(--neutral-900);
+  --color-border-footer: color-mix(
+    in oklab,
+    var(--white) 12%,
+    var(--neutral-900)
+  );
   --color-brand: var(--forest-500);
   --color-brand-foreground: var(--sand-50);
   --color-accent: var(--coral-500);
@@ -108,6 +109,12 @@
   --text-stat: clamp(2.5rem, 1.4rem + 3vw, 4.5rem);
   --text-stat--line-height: 0.95;
   --text-stat--letter-spacing: -0.04em;
+  /* Matches the numeral line so the date range can sit in that same band. */
+  --spacing-stat-value: calc(var(--text-stat) * 0.95);
+  /* Tracks the stat column so a date range stays on one line. */
+  --text-stat-range: clamp(1rem, 9.5cqi, 2rem);
+  --text-stat-range--line-height: 1.1;
+  --text-stat-range--letter-spacing: -0.025em;
   --text-wordmark: clamp(3.5rem, 12vw, 10rem);
   --text-wordmark--line-height: 1;
   --text-wordmark--letter-spacing: -0.045em;
@@ -122,10 +129,13 @@
   --spacing-hit-dense: 2.5rem;
   --spacing-header: 4rem;
   --spacing-map-pin: 3rem;
-  --spacing-marquee: 4.5rem;
-  --size-marquee-logo: 2.75rem;
-  --duration-marquee: 48s;
-  --size-map-card: 12rem;
+  --size-partner-logo: 3.5rem;
+  --spacing-partner-logo: var(--size-partner-logo);
+  --size-partner-tile: 7.5rem;
+  --spacing-partner-tile: var(--size-partner-tile);
+  --size-funding-logo: 4.5rem;
+  --spacing-funding-logo: var(--size-funding-logo);
+  --size-map-card: 10rem;
   --spacing-map-card: var(--size-map-card);
   --spacing-glass-card: 16rem;
   --size-viewport-blur: 14rem;
@@ -140,6 +150,7 @@
   --blur-viewport-8: 5px;
 
   --container-narrow: 44rem;
+  --container-map: 36rem;
   --container-content: 72rem;
   --container-wide: 90rem;
 
@@ -322,68 +333,5 @@
     .viewport-blur {
       display: none;
     }
-  }
-
-  .marquee {
-    overflow: hidden;
-    /* Softens the cut where a logo meets the viewport edge. */
-    mask-image: var(--mask-marquee);
-  }
-
-  .marquee-track {
-    display: flex;
-    width: max-content;
-    align-items: center;
-    animation: marquee-scroll var(--duration-marquee) linear infinite;
-  }
-
-  .marquee:hover .marquee-track,
-  .marquee:focus-within .marquee-track {
-    animation-play-state: paused;
-  }
-
-  .marquee-list {
-    display: flex;
-    flex-shrink: 0;
-    align-items: center;
-    column-gap: var(--spacing-marquee);
-    padding-inline-end: var(--spacing-marquee);
-  }
-
-  .marquee-logo {
-    height: var(--size-marquee-logo);
-    width: auto;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .marquee {
-      mask-image: none;
-    }
-
-    .marquee-track {
-      animation: none;
-      width: 100%;
-    }
-
-    .marquee-list {
-      width: 100%;
-      flex-wrap: wrap;
-      justify-content: center;
-      row-gap: var(--spacing-stack-md);
-    }
-
-    .marquee-clone {
-      display: none;
-    }
-  }
-}
-
-@keyframes marquee-scroll {
-  from {
-    transform: translateX(0);
-  }
-
-  to {
-    transform: translateX(-50%);
   }
 }

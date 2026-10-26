@@ -3,28 +3,27 @@ import { Section } from "@/components/layout/Section";
 import { Reveal } from "@/components/motion/Reveal";
 import { Container, DisplayHeading, Eyebrow, Text } from "@/components/ui";
 import {
-  // partnerGroupHeadingKey,
-  // partnerGroupOrder,
+  partnerGroupHeadingKey,
+  partnerGroupOrder,
   partners,
 } from "@/content/partners";
-// import { PartnerGroups } from "./PartnerGroups";
-import { PartnerMarquee } from "./PartnerMarquee";
+import { PartnerGroups } from "./PartnerGroups";
 
 export async function Partners() {
   const t = await getTranslations();
 
-  // const groups = partnerGroupOrder.map((groupId) => ({
-  //   id: groupId,
-  //   heading: t(partnerGroupHeadingKey[groupId]),
-  //   note: groupId === "associated" ? t("partners.associatedNote") : null,
-  //   partners: partners
-  //     .filter((partner) => partner.group === groupId)
-  //     .map((partner) => ({
-  //       id: partner.id,
-  //       name: t(partner.nameKey),
-  //       href: partner.href,
-  //     })),
-  // }));
+  const groups = partnerGroupOrder.map((groupId) => ({
+    id: groupId,
+    heading: t(partnerGroupHeadingKey[groupId]),
+    partners: partners
+      .filter((partner) => partner.group === groupId)
+      .map((partner) => ({
+        id: partner.id,
+        name: t(partner.nameKey),
+        href: partner.href,
+        logos: partner.logos,
+      })),
+  }));
 
   return (
     <Section id="partners" labelledBy="partners-title">
@@ -43,30 +42,16 @@ export async function Partners() {
             {t("partners.intro")}
           </Text>
         </Reveal>
-        {/* <Reveal>
+        <Reveal>
           <PartnerGroups
             groups={groups}
-            advisory={t("partners.advisoryPlaceholder")}
+            connected={{
+              eyebrow: t("partners.connected.eyebrow"),
+              body: t("partners.connected.body"),
+            }}
           />
-        </Reveal> */}
+        </Reveal>
       </Container>
-      <PartnerMarquee
-        label={t("partners.logosLabel")}
-        partners={partners.flatMap((partner) =>
-          partner.logo
-            ? [
-                {
-                  id: partner.id,
-                  name: t(partner.nameKey),
-                  href: partner.href,
-                  src: partner.logo.src,
-                  width: partner.logo.width,
-                  height: partner.logo.height,
-                },
-              ]
-            : [],
-        )}
-      />
     </Section>
   );
 }

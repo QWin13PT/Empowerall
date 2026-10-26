@@ -1,9 +1,9 @@
 {
   "meta": {
-    "title": "EMPOWERALL — A crescer o futuro a partir da terra",
-    "description": "O EMPOWERALL reúne agricultores da nova geração, investigadores, assessores, decisores políticos e comunidades locais para co-criar percursos agroecológicos de mudança.",
+    "title": "EMPOWERALL — A crescer a agroecologia. Agricultores da nova geração e conhecimento duradouro",
+    "description": "O EMPOWERALL reúne agricultores da nova geração, investigadores, assessores, decisores políticos e comunidades locais em Agroecology Living Labs.",
     "ogTitle": "EMPOWERALL",
-    "ogDescription": "A crescer o futuro a partir da terra. Um projeto europeu para a transição agroecológica com agricultores da nova geração."
+    "ogDescription": "A crescer a agroecologia. Agricultores da nova geração e conhecimento duradouro."
   },
   "common": {
     "skipToContent": "Saltar para o conteúdo",
@@ -26,13 +26,14 @@
     "about": "Sobre",
     "approach": "Abordagem",
     "livingLabs": "Living Labs",
+    "people": "Pessoas",
     "partners": "Parceiros"
   },
   "hero": {
     "eyebrow": "EMPOWERALL",
-    "title": "A crescer o futuro a partir da <accent>terra</accent>.",
-    "description": "O EMPOWERALL reúne agricultores da nova geração, investigadores, assessores, decisores políticos e comunidades locais para co-criar percursos agroecológicos de mudança.",
-    "distinctive": "Os Living Labs estão integrados em Plataformas de Investigação Socioecológica de Longo Prazo (LTSER) da eLTER RI.",
+    "title": "A crescer a <accent>agroecologia</accent> <subline>Agricultores da nova geração e conhecimento duradouro</subline>",
+    "description": "O EMPOWERALL reúne agricultores da nova geração, investigadores, assessores, decisores políticos e comunidades locais em Agroecology Living Labs.",
+    "distinctive": "Integrados nas Plataformas de Investigação Socioecológica de Longo Prazo da eLTER RI, estes Labs co-criam percursos de mudança agroecológica.",
     "cta": "Descubra o projeto",
     "visualAlt": "Investigadores a caminhar ao longo de parcelas de ensaios agroecológicos.",
     "facts": {
@@ -41,7 +42,7 @@
         "caption": "em {count, number} países"
       },
       "partners": {
-        "unit": "parceiros do projeto",
+        "unit": "Parceiros",
         "caption": "de {count, number} países"
       },
       "platforms": {
@@ -50,28 +51,29 @@
       },
       "duration": {
         "unit": "Duração do projeto",
-        "range": "{start} – {end}"
+        "range": "{start} – {end}",
+        "caption": "{count, number} anos"
       }
     }
   },
   "challenge": {
     "eyebrow": "O desafio",
     "title": "Os agricultores da nova geração podem impulsionar a mudança. Mas não o podem fazer sozinhos.",
-    "paragraph1": "Os agricultores da nova geração trazem novas ideias, competências e perspetivas à agricultura. Mas a mudança depende do acesso a conhecimento, recursos, redes e oportunidades de participação na tomada de decisão.",
-    "paragraph2": "O EMPOWERALL cria as condições para que assumam um papel mais ativo na definição do futuro da agricultura.",
+    "paragraph1": "Os sistemas agroalimentares são moldados por barreiras estruturais — ou lock-ins — que os podem manter em percursos insustentáveis e tornar a mudança difícil. Para os agricultores da nova geração, especialmente os jovens, estes lock-ins incluem o acesso limitado à terra e aos recursos, lacunas de conhecimento, ligações frágeis no sistema e participação limitada na tomada de decisão.",
+    "paragraph2": "O EMPOWERALL trabalha para compreender e enfrentar estas barreiras, criando melhores condições para que os agricultores da nova geração assumam um papel ativo nas transições agroecológicas.",
     "visualAlt": "Vista aérea de ensaios agrícolas."
   },
   "needs": {
     "eyebrow": "As barreiras",
-    "title": "O que precisa de mudar?",
+    "title": "O que é necessário para a mudança?",
     "items": {
       "access": {
         "title": "Acesso",
-        "body": "À terra, à sucessão agrícola, aos recursos e às oportunidades."
+        "body": "Terra, recursos, oportunidades e sucessão agrícola."
       },
       "knowledge": {
         "title": "Conhecimento",
-        "body": "Evidência científica, experiência local e aprendizagem partilhada."
+        "body": "Investigação de base local, experiência local e aprendizagem partilhada."
       },
       "networks": {
         "title": "Redes",
@@ -79,38 +81,49 @@
       },
       "voice": {
         "title": "Voz",
-        "body": "Um papel mais forte na tomada de decisão, na governação e nas políticas."
+        "body": "Papéis mais fortes dos agricultores da nova geração na tomada de decisão, na governação e nas políticas."
       }
     }
   },
   "approach": {
     "eyebrow": "A nossa abordagem",
     "title": "Do conhecimento à ação, em conjunto.",
-    "intro": "O EMPOWERALL trabalha através de ambientes colaborativos onde agricultores, investigadores, assessores, comunidades e decisores políticos podem explorar desafios locais, trocar conhecimento e co-criar soluções.",
+    "intro": "O EMPOWERALL combina conhecimento científico e local com pensamento de sistemas e de futuros para compreender desafios complexos, explorar futuros possíveis e co-criar percursos práticos de mudança.",
     "indexLabel": "{current} de {total}",
     "steps": {
       "listen": {
         "title": "Ouvir",
-        "body": "Compreender os desafios, as experiências e as necessidades locais."
+        "body": "Compreender os desafios, as experiências e as necessidades locais, reunindo diferentes perspetivas para identificar as barreiras, as oportunidades e as prioridades que moldam cada território."
       },
       "connect": {
         "title": "Ligar",
-        "body": "Reunir diferentes pessoas e perspetivas."
+        "body": "Reunir agricultores, investigadores, assessores, comunidades e decisores políticos, combinando conhecimento científico, local e prático para construir uma compreensão partilhada de cada contexto."
+      },
+      "explore": {
+        "title": "Explorar",
+        "body": "Usar o pensamento de sistemas e o pensamento de futuros para compreender como diferentes fatores interagem, imaginar futuros possíveis e identificar percursos rumo a sistemas agroalimentares mais sustentáveis."
       },
       "cocreate": {
         "title": "Co-criar",
-        "body": "Desenvolver e testar práticas agroecológicas, modelos de governação e novas ideias."
+        "body": "Desenvolver e testar práticas agroecológicas, modelos de governação e outras inovações localmente relevantes através de investigação-ação transdisciplinar."
       },
       "learn": {
         "title": "Aprender e escalar",
-        "body": "Transformar a experiência local e a observação de longo prazo da eLTER em conhecimento que possa viajar mais longe, incluindo recomendações de política ao nível da União Europeia."
+        "body": "Ligar a experiência local à observação de longo prazo, construir evidência e transformar a aprendizagem do projeto em conhecimento e soluções que possam ser adaptados e partilhados entre territórios."
+      },
+      "inform": {
+        "title": "Informar",
+        "body": "Traduzir a evidência e a aprendizagem do projeto em recomendações de política que possam apoiar transições agroecológicas, incluindo ao nível europeu."
       }
     }
   },
   "livingLabs": {
-    "eyebrow": "Living Labs",
-    "title": "Quatro lugares. Perguntas partilhadas. Realidades diferentes.",
-    "intro": "O EMPOWERALL desenvolve quatro Agroecology Living Labs na Roménia, na Eslováquia, em França e em Espanha. Cada Living Lab responde ao seu próprio contexto ambiental, social e agrícola, contribuindo ao mesmo tempo para um objetivo partilhado: avançar as transições agroecológicas em diferentes territórios.",
+    "eyebrow": "Living Labs e investigação de longo prazo",
+    "title": "Quatro lugares com uma memória longa.",
+    "intro": "O EMPOWERALL desenvolve quatro Agroecology Living Labs (AELL) em Espanha, em França, na Roménia e na Eslováquia. Cada Living Lab está integrado numa Plataforma de Investigação Socioecológica de Longo Prazo (LTSER) da eLTER RI, ligando a experimentação local à investigação, à monitorização e ao conhecimento estabelecidos de cada território.",
+    "research": "Os Living Labs reúnem agricultores da nova geração, investigadores, assessores, comunidades e outros atores locais para compreender desafios, explorar futuros possíveis e co-criar soluções agroecológicas. As Plataformas LTSER fornecem a observação socioecológica de longo prazo, a transdisciplinaridade e as redes de atores locais necessárias para acompanhar a mudança, compreender o contexto e construir evidência mais sólida ao longo do tempo.",
+    "advisoryCouncil": "No núcleo de cada AELL, um Conselho Consultivo dá aos agricultores da nova geração uma voz formal na sua governação.",
+    "tagline": "Quatro AELLs. Quatro Plataformas LTSER. Uma rede de aprendizagem ligada.",
     "mapLabel": "Mapa pontilhado da Europa com os Living Labs na Roménia, na Eslováquia, em França e em Espanha em destaque.",
     "labs": {
       "romania": {
@@ -139,23 +152,6 @@
       }
     }
   },
-  "observation": {
-    "eyebrow": "Observação de longo prazo",
-    "title": "Ligar a ação local ao conhecimento de longo prazo.",
-    "paragraph1": "O EMPOWERALL liga a experimentação que decorre nos Living Labs às Plataformas de Investigação Socioecológica de Longo Prazo (LTSER) da eLTER RI.",
-    "paragraph2": "Ao combinar o conhecimento local com a monitorização e os dados recolhidos ao longo do tempo nas Plataformas LTSER da eLTER RI, o projeto pode acompanhar a mudança, compreender como diferentes condições ambientais e sociais influenciam os resultados e construir evidência mais sólida para soluções agroecológicas.",
-    "visualAlt": "Vista aérea de parcelas de ensaio usadas para observação de longo prazo.",
-    "monitored": {
-      "title": "Monitorizado ao longo do tempo",
-      "items": {
-        "soil": "Solo",
-        "biodiversity": "Biodiversidade",
-        "water": "Água",
-        "landUse": "Uso do solo",
-        "practices": "Práticas agrícolas"
-      }
-    }
-  },
   "people": {
     "eyebrow": "As pessoas no centro",
     "title": "Construído com as pessoas, não apenas para elas.",
@@ -175,43 +171,48 @@
     "eyebrow": "Parceiros",
     "title": "Uma rede europeia a trabalhar entre disciplinas e territórios.",
     "intro": "O EMPOWERALL reúne parceiros com competência em agroecologia, sistemas agrícolas, investigação, observação de longo prazo, políticas, investigação participativa e envolvimento de partes interessadas.",
-    "logosLabel": "Logótipos dos parceiros",
     "groups": {
-      "coordinator": "Coordenado por",
+      "coordinator": "Coordenado por INGENIO (CSIC-UPV)",
       "beneficiaries": "Beneficiários",
       "associated": "Parceiros associados"
     },
-    "associatedNote": "A eLTER RI participa como conselheira externa através do UFZ.",
-    "advisoryPlaceholder": "Um painel consultivo será nomeado nos primeiros seis meses do projeto.",
+    "connected": {
+      "eyebrow": "Ligado à eLTER RI",
+      "body": "O EMPOWERALL trabalha em quatro Plataformas LTSER da eLTER RI, que também aconselha o projeto através da LTER-Europe no UFZ."
+    },
     "items": {
       "csic": "INGENIO (CSIC-UPV)",
       "nibio": "Norwegian Institute of Bioeconomy Research",
-      "cebc": "CEBC / INRAE",
-      "globaz": "GLOBAZ, S.A.",
+      "cebc": "CNRS, Centre d’Études Biologiques de Chizé",
+      "arvore": "Árvore",
       "comillas": "Universidad Pontificia Comillas",
       "bucharest": "University of Bucharest",
       "braila": "Agricultural Research and Development Station of Brăila",
-      "ile": "Institute of Landscape Ecology",
-      "gods": "GODS",
+      "ile": "Institute of Landscape Ecology, Slovak Academy of Sciences",
+      "gods": "GODS, Groupe Ornithologique des Deux-Sèvres",
       "dlr": "SAS DLR",
       "donana": "Asociación de Agricultores Puerta de Doñana",
-      "agrosmart": "AGROSMART CLUSTER",
-      "ufz": "Helmholtz Centre for Environmental Research UFZ"
+      "agrosmart": "Agrosmart Cluster",
+      "ufz": "UFZ (eLTER RI)"
     }
   },
   "footer": {
     "tagline": "A ligar pessoas, conhecimento e territórios para a transição agroecológica.",
     "contact": "Contacte-nos",
     "emailPlaceholder": "Endereço de correio do projeto a fornecer",
-    "follow": "Siga o projeto",
+    "follow": "Siga o EMPOWERALL",
     "social": {
       "linkedin": "LinkedIn",
       "facebook": "Facebook",
       "instagram": "Instagram"
     },
     "socialPending": "Ligação a fornecer",
-    "acknowledgement": "Agradecimentos a parceiros e financiadores",
+    "acknowledgement": "Financiamento e agradecimentos",
     "funding": "Declaração de financiamento da UE a fornecer.",
+    "nationalFundersPending": "Logótipos dos financiadores nacionais a fornecer.",
+    "euEmblemAlt": "Financiado pela União Europeia",
+    "agroecologyAlt": "Agroecology Partnership",
+    "copyright": "© {start}–{end} EMPOWERALL",
     "privacy": "Política de privacidade",
     "cookies": "Política de cookies",
     "legalPending": "Página a fornecer",

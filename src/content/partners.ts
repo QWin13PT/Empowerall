@@ -6,6 +6,21 @@ type PartnerLogo = {
 
 export type PartnerGroup = "coordinator" | "beneficiary" | "associated";
 
+export type PartnerNameKey =
+  | "partners.items.csic"
+  | "partners.items.nibio"
+  | "partners.items.cebc"
+  | "partners.items.arvore"
+  | "partners.items.comillas"
+  | "partners.items.bucharest"
+  | "partners.items.braila"
+  | "partners.items.ile"
+  | "partners.items.gods"
+  | "partners.items.dlr"
+  | "partners.items.donana"
+  | "partners.items.agrosmart"
+  | "partners.items.ufz";
+
 export const partnerGroupOrder = [
   "coordinator",
   "beneficiary",
@@ -21,132 +36,132 @@ export const partnerGroupHeadingKey = {
 export const partners: readonly {
   id: string;
   group: PartnerGroup;
-  nameKey:
-    | "partners.items.csic"
-    | "partners.items.nibio"
-    | "partners.items.cebc"
-    | "partners.items.globaz"
-    | "partners.items.comillas"
-    | "partners.items.bucharest"
-    | "partners.items.braila"
-    | "partners.items.ile"
-    | "partners.items.gods"
-    | "partners.items.dlr"
-    | "partners.items.donana"
-    | "partners.items.agrosmart"
-    | "partners.items.ufz";
+  nameKey: PartnerNameKey;
   href: string;
-  logo: PartnerLogo | null;
+  logos: readonly PartnerLogo[];
 }[] = [
   {
     id: "csic",
     group: "coordinator",
     nameKey: "partners.items.csic",
     href: "https://www.ingenio.upv.es/",
-    logo: null,
+    logos: [{ src: "/images/partners/ingenio.png", width: 711, height: 321 }],
   },
   {
     id: "nibio",
     group: "beneficiary",
     nameKey: "partners.items.nibio",
     href: "https://www.nibio.no/",
-    logo: { src: "/images/partners/nibio.png", width: 512, height: 180 },
+    logos: [{ src: "/images/partners/nibio.png", width: 512, height: 180 }],
   },
   {
     id: "cebc",
     group: "beneficiary",
     nameKey: "partners.items.cebc",
-    href: "https://za-plaineetvaldesevre.com/",
-    logo: null,
+    href: "https://www.cebc.cnrs.fr/",
+    logos: [{ src: "/images/partners/cnrs.svg", width: 221, height: 221 }],
   },
   {
-    id: "globaz",
+    id: "arvore",
     group: "beneficiary",
-    nameKey: "partners.items.globaz",
-    href: "https://www.loba.com/en",
-    logo: { src: "/images/partners/globaz.png", width: 500, height: 96 },
+    nameKey: "partners.items.arvore",
+    href: "",
+    logos: [{ src: "/images/partners/arvore.png", width: 926, height: 214 }],
   },
   {
     id: "comillas",
     group: "beneficiary",
     nameKey: "partners.items.comillas",
     href: "https://www.comillas.edu/",
-    logo: {
-      src: "/images/partners/universidad-pontificia-comillas.png",
-      width: 400,
-      height: 110,
-    },
+    logos: [
+      {
+        src: "/images/partners/universidad-pontificia-comillas.png",
+        width: 400,
+        height: 110,
+      },
+    ],
   },
   {
     id: "bucharest",
     group: "beneficiary",
     nameKey: "partners.items.bucharest",
     href: "https://rcses.unibuc.ro/",
-    logo: {
-      src: "/images/partners/university-of-bucharest.png",
-      width: 1833,
-      height: 390,
-    },
+    logos: [
+      {
+        src: "/images/partners/university-of-bucharest.png",
+        width: 1833,
+        height: 390,
+      },
+    ],
   },
   {
     id: "braila",
     group: "beneficiary",
     nameKey: "partners.items.braila",
     href: "https://www.scdabraila.ro/",
-    logo: {
-      src: "/images/partners/agricultural-research-and-development-station-of-brăila.png",
-      width: 952,
-      height: 503,
-    },
+    logos: [
+      {
+        src: "/images/partners/agricultural-research-and-development-station-of-brăila.png",
+        width: 952,
+        height: 503,
+      },
+    ],
   },
   {
     id: "ile",
     group: "beneficiary",
     nameKey: "partners.items.ile",
     href: "http://www.uke.sav.sk",
-    logo: {
-      src: "/images/partners/institute-of-landscape-ecology.png",
-      width: 528,
-      height: 216,
-    },
+    logos: [
+      {
+        src: "/images/partners/institute-of-landscape-ecology.png",
+        width: 528,
+        height: 216,
+      },
+    ],
   },
   {
     id: "gods",
     group: "beneficiary",
     nameKey: "partners.items.gods",
     href: "https://www.ornitho79.org/",
-    logo: null,
+    logos: [{ src: "/images/partners/gods.jpg", width: 300, height: 168 }],
   },
   {
     id: "dlr",
     group: "beneficiary",
     nameKey: "partners.items.dlr",
     href: "",
-    logo: null,
+    logos: [],
   },
   {
     id: "donana",
     group: "associated",
     nameKey: "partners.items.donana",
     href: "",
-    logo: {
-      src: "/images/partners/asociación-de-agricultores-puerta-de-doñana.png",
-      width: 548,
-      height: 364,
-    },
+    logos: [
+      {
+        src: "/images/partners/asociación-de-agricultores-puerta-de-doñana.png",
+        width: 548,
+        height: 364,
+      },
+    ],
   },
   {
     id: "agrosmart",
     group: "associated",
     nameKey: "partners.items.agrosmart",
     href: "",
-    logo: null,
+    logos: [],
   },
   {
     id: "ufz",
     group: "associated",
     nameKey: "partners.items.ufz",
     href: "https://www.ufz.de/",
-    logo: { src: "/images/partners/UFZ.png", width: 598, height: 200 },
+    logos: [
+      { src: "/images/partners/UFZ.png", width: 598, height: 200 },
+      { src: "/images/partners/elter-ri.svg", width: 1808, height: 758 },
+    ],
   },
 ];

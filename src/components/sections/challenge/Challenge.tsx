@@ -9,14 +9,13 @@ import {
   Text,
 } from "@/components/ui";
 import { media } from "@/content/media";
-import { KeyFacts } from "./KeyFacts";
 
 export async function Challenge() {
   const t = await getTranslations();
 
   return (
     <Section id="about" labelledBy="challenge-title" tone="subtle">
-      <Container width="wide" className="flex flex-col gap-12">
+      <Container width="wide">
         <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
           <Reveal className="max-w-narrow flex flex-col gap-5">
             <Eyebrow>{t("challenge.eyebrow")}</Eyebrow>
@@ -36,9 +35,6 @@ export async function Challenge() {
             />
           </Reveal>
         </div>
-        <Reveal className="border-border border-t pt-10">
-          <KeyFacts />
-        </Reveal>
       </Container>
     </Section>
   );
