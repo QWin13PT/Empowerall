@@ -4,6 +4,20 @@ All notable work on the EMPOWERALL landing page is recorded here, as one report 
 
 ## [Unreleased]
 
+### 2026-10-28
+
+**Summary**
+Funding & acknowledgements now leads with the Agroecology Partnership logo, then the EU emblem. The two placeholder funding lines are gone for now. Back to top is a button at the bottom right of the footer, on the wordmark row.
+
+**Done**
+- **Footer:** the Agroecology Partnership logo comes before the EU emblem, with a wider gap between them. “EU funding statement to be provided.” and “National funder logos to be provided.” are no longer shown. Back to top is a button at the bottom right, on the same row as the wordmark.
+
+**Technical notes**
+- Messages: removed `footer.funding` and `footer.nationalFundersPending`.
+
+**Checks**
+typecheck, lint, i18n, and build not re-run · funding row checked at desktop in en and 390 (Agroecology Partnership, then the EU emblem, wider gap, placeholder lines gone; logos stack on the phone with no overflow)
+
 ### 2026-10-26
 
 **Summary**

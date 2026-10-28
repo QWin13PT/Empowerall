@@ -5,6 +5,7 @@ import { Link } from "@/i18n/navigation";
 import { navItems, site } from "@/config/site";
 import { LanguageSwitcher } from "@/components/layout/LanguageSwitcher";
 import {
+  Button,
   Container,
   Eyebrow,
   Icon,
@@ -56,21 +57,7 @@ export async function Footer() {
       <div className="bg-bg py-12 lg:py-16">
         <Container width="wide" className="flex flex-col gap-5">
           <Eyebrow>{t("footer.acknowledgement")}</Eyebrow>
-          <div className="flex flex-wrap items-center gap-6">
-            <a
-              href={funding.eu.href}
-              rel="noopener noreferrer"
-              target="_blank"
-              className="duration-fast active:scale-press transition-[opacity,transform] ease-out hover:opacity-80"
-            >
-              <Image
-                src={euEmblem.src}
-                alt={t(funding.eu.altKey)}
-                width={euEmblem.width}
-                height={euEmblem.height}
-                className="h-funding-logo w-auto shrink-0 object-contain"
-              />
-            </a>
+          <div className="flex flex-wrap items-center gap-funding-logo">
             <a
               href={funding.agroecology.href}
               rel="noopener noreferrer"
@@ -85,13 +72,21 @@ export async function Footer() {
                 className="h-funding-logo w-auto shrink-0 object-contain"
               />
             </a>
+            <a
+              href={funding.eu.href}
+              rel="noopener noreferrer"
+              target="_blank"
+              className="duration-fast active:scale-press transition-[opacity,transform] ease-out hover:opacity-80"
+            >
+              <Image
+                src={euEmblem.src}
+                alt={t(funding.eu.altKey)}
+                width={euEmblem.width}
+                height={euEmblem.height}
+                className="h-funding-logo w-auto shrink-0 object-contain"
+              />
+            </a>
           </div>
-          <Text size="sm" tone="muted">
-            {t("footer.funding")}
-          </Text>
-          <Text size="sm" tone="muted">
-            {t("footer.nationalFundersPending")}
-          </Text>
         </Container>
       </div>
       <div className="bg-bg-footer text-text-inverse [&_a:focus-visible]:outline-focus-ring-inverse [&_button:focus-visible]:outline-focus-ring-inverse pt-section pb-viewport-blur">
@@ -219,16 +214,21 @@ export async function Footer() {
                   {t("footer.cookies")} ({t("footer.legalPending")})
                 </span>
               )}
-              <a
-                href="#top"
-                className="min-h-hit text-body-sm text-text-inverse duration-fast hover:text-highlight active:scale-press inline-flex items-center gap-2 font-sans font-medium transition-[color,transform] ease-out sm:ms-auto"
-              >
+            </div>
+          </div>
+          <div className="flex items-end gap-6">
+            <Wordmark tone="inverse" className="min-w-0 flex-1" />
+            <Button
+              asChild
+              variant="secondary"
+              className="focus-visible:ring-focus-ring-inverse focus-visible:ring-offset-bg-footer shrink-0"
+            >
+              <a href="#top">
                 {t("footer.backToTop")}
                 <Icon icon={ArrowUp} />
               </a>
-            </div>
+            </Button>
           </div>
-          <Wordmark tone="inverse" />
         </Container>
       </div>
     </footer>
